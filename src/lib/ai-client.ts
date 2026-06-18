@@ -1,5 +1,5 @@
 // Interface for our frontend to talk to our FastAPI AI Service
-const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://localhost:8000';
+const AI_SERVICE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.AI_SERVICE_URL || 'http://localhost:8000';
 
 export interface SymptomInput {
   text: string;
