@@ -48,6 +48,24 @@ export default function ResultPage() {
     }
   }, [isPending, result, messages.length]);
 
+  if (isError) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center p-4">
+        <ShieldAlert className="w-16 h-16 text-alert-500 mb-4" />
+        <h2 className="font-display font-bold text-2xl text-text-primary mb-2">Analysis Timeout</h2>
+        <p className="text-text-secondary mb-6 max-w-sm text-center">
+          The AI server was asleep and took too long to wake up. Please click retry!
+        </p>
+        <button 
+          onClick={() => window.location.reload()}
+          className="bg-primary-500 hover:bg-primary-400 text-surface-900 font-bold px-6 py-3 rounded-xl transition-all"
+        >
+          Retry Analysis
+        </button>
+      </div>
+    );
+  }
+
   if (isPending || !result) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center p-4">

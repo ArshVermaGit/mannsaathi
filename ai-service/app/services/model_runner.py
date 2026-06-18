@@ -18,13 +18,17 @@ class ModelRunner:
 
     def _query_huggingface(self, text: str) -> list:
         headers = {"Authorization": f"Bearer {self.hf_token}"}
-        response = requests.post(self.api_url, headers=headers, json={"inputs": text})
-        
-        if response.status_code != 200:
-            print(f"HF API Error: {response.text}")
-            return []
+        try:
+            response = requests.post(self.api_url, headers=headers, json={"inputs": text}, timeout=15)
             
-        return response.json()
+            if response.status_code != 200:
+                print(f"HF API Error: {response.text}")
+                return []
+                
+            return response.json()
+        except Exception as e:
+            print(f"HF Connection Error: {e}")
+            return []
 
     def analyze(self, text: str, duration: int, severity: float) -> Dict[str, Any]:
         """
