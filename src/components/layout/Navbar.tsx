@@ -2,7 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, Globe } from "lucide-react";
 
-export function Navbar() {
+import { auth } from "@/lib/auth";
+
+export async function Navbar() {
+  const session = await auth();
+  
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-surface-700 bg-surface-900/80 backdrop-blur-md">
       <div className="container mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
@@ -44,6 +48,25 @@ export function Navbar() {
           >
             Start (Anonymous)
           </Link>
+
+          {session?.user ? (
+            <Link href="/dashboard" className="w-10 h-10 rounded-full overflow-hidden border-2 border-surface-700 hover:border-primary-500 transition-all ml-2">
+              <Image 
+                src={session.user.image || "/default-avatar.png"} 
+                alt="User Profile" 
+                width={40} 
+                height={40} 
+                className="object-cover"
+              />
+            </Link>
+          ) : (
+            <Link 
+              href="/sign-in" 
+              className="text-sm font-medium text-text-primary hover:text-primary-400 border border-surface-700 bg-surface-800 px-4 py-2 rounded-lg transition-all hover:bg-surface-700 ml-2"
+            >
+              Sign In
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Toggle */}
