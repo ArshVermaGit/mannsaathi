@@ -1,0 +1,345 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─────────────────────────────────────────
+// USERS
+// ─────────────────────────────────────────
+
+model User {
+  id                String    @id @default(cuid())
+  email             String?   @unique    // optional (social login may provide)
+  emailVerified     DateTime?
+  name              String?
+  image             String?
+  
+  // MannSaathi preferences
+  language          Language  @default(EN)
+  bhaiModeEnabled   Boolean   @default(false)
+  notificationsEnabled Boolean @default(true)
+  
+  // Stats
+  streakDays        Int       @default(0)
+  lastCheckAt       DateTime?
+  totalChecks       Int       @default(0)
+  
+  // Relationships
+  accounts          Account[]
+  sessions          Session[]
+  healthLogs        HealthLog[]
+  communityContribs CommunityContribution[]
+  nudgeHistory      NudgeHistory[]
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@map("users")
+}
+
+// NextAuth required models
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ─────────────────────────────────────────
+// ANONYMOUS SESSIONS
+// ─────────────────────────────────────────
+
+model AnonymousSession {
+  id              String    @id @default(uuid())
+  
+  // Zero PII — only behavioral data
+  language        Language  @default(EN)
+  bhaiModeUsed    Boolean   @default(false)
+  location        String?   // city-level only, e.g., "Lucknow"
+  
+  // Activity
+  totalChecks     Int       @default(0)
+  lastActiveAt    DateTime  @default(now())
+  
+  // Optional migration to registered account
+  migratedToUserId String?  @unique
+  
+  // Relationships
+  healthLogs      HealthLog[]
+  
+  createdAt       DateTime  @default(now())
+  
+  @@map("anonymous_sessions")
+}
+
+// ─────────────────────────────────────────
+// HEALTH LOGS
+// ─────────────────────────────────────────
+
+model HealthLog {
+  id              String    @id @default(cuid())
+  
+  // Owner — one of these will be set
+  userId          String?
+  sessionId       String?   // anonymous session ID
+  user            User?     @relation(fields: [userId], references: [id])
+  anonymousSession AnonymousSession? @relation(fields: [sessionId], references: [id])
+  
+  // Symptom input (no PII, just medical data)
+  pathway         Pathway
+  symptomIds      String[]  // array of symptom category IDs
+  customText      String?   @db.Text  // encrypted at rest
+  durationDays    Int
+  severity        Float     // 0-10
+  language        Language
+  
+  // AI Analysis Output
+  analysisId      String    @unique @default(cuid())
+  riskLevel       RiskLevel
+  riskScore       Float
+  primaryMessage  String    @db.Text
+  possibleReasons String[]
+  confidence      Float
+  isUrgent        Boolean   @default(false)
+  
+  // Actions taken
+  nextStepViewed  Boolean   @default(false)
+  nextStepTaken   String?   // which tier they chose
+  
+  // Metadata
+  createdAt       DateTime  @default(now())
+  
+  @@map("health_logs")
+}
+
+// ─────────────────────────────────────────
+// COMMUNITY
+// ─────────────────────────────────────────
+
+model CommunityContribution {
+  id              String    @id @default(cuid())
+  
+  userId          String?
+  user            User?     @relation(fields: [userId], references: [id])
+  sessionId       String?   // can be anonymous
+  
+  // Content (no PII, opt-in)
+  outcome         String    @db.VarChar(280)   // "Got checked, all fine"
+  barrierOvercome String?                       // which barrier they overcame
+  location        String?                       // city only
+  
+  // Moderation
+  isApproved      Boolean   @default(false)
+  isFlagged       Boolean   @default(false)
+  
+  // Consent
+  consentGiven    Boolean   @default(true)
+  
+  createdAt       DateTime  @default(now())
+  
+  @@map("community_contributions")
+}
+
+model CommunityStats {
+  id              String    @id @default(cuid())
+  
+  // Aggregated stats (pre-computed, updated hourly)
+  location        String    // city
+  period          String    // "2026-06" (year-month)
+  totalChecks     Int       @default(0)
+  
+  // Barrier breakdown (counts)
+  fearCount       Int       @default(0)
+  stigmaCount     Int       @default(0)
+  masculinityCount Int      @default(0)
+  costCount       Int       @default(0)
+  timeCount       Int       @default(0)
+  denialCount     Int       @default(0)
+  
+  // Top symptoms (JSON array)
+  topSymptoms     Json      @default("[]")
+  
+  // Weekly trend (last 7 days, JSON array of daily counts)
+  weeklyTrend     Json      @default("[]")
+  
+  updatedAt       DateTime  @updatedAt
+  
+  @@unique([location, period])
+  @@map("community_stats")
+}
+
+// ─────────────────────────────────────────
+// RESOURCES
+// ─────────────────────────────────────────
+
+model Resource {
+  id              String        @id @default(cuid())
+  name            String
+  nameHi          String?       // Hindi name
+  type            ResourceType
+  
+  // Location
+  address         String
+  city            String
+  state           String
+  latitude        Float
+  longitude       Float
+  
+  // Details
+  phone           String?
+  website         String?
+  hours           String?       // "Mon-Sat 9am-5pm"
+  
+  // Schemes
+  isFree          Boolean       @default(false)
+  acceptsAyushman Boolean       @default(false)
+  acceptsPMJAY    Boolean       @default(false)
+  
+  // Metadata
+  isVerified      Boolean       @default(false)
+  isActive        Boolean       @default(true)
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@map("resources")
+}
+
+model HealthScheme {
+  id              String    @id @default(cuid())
+  name            String
+  nameHi          String?
+  description     String    @db.Text
+  descriptionHi   String?   @db.Text
+  eligibility     String    @db.Text
+  benefits        String[]
+  website         String?
+  phone           String?
+  isNational      Boolean   @default(true)
+  state           String?   // if state-specific
+  
+  @@map("health_schemes")
+}
+
+// ─────────────────────────────────────────
+// NUDGES
+// ─────────────────────────────────────────
+
+model NudgeHistory {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  
+  nudgeType       String    // "symptom_reminder" | "community" | "moment"
+  message         String
+  sentAt          DateTime  @default(now())
+  wasOpened       Boolean   @default(false)
+  wasActedUpon    Boolean   @default(false)
+  
+  @@map("nudge_history")
+}
+
+// ─────────────────────────────────────────
+// STORIES (Editorial content)
+// ─────────────────────────────────────────
+
+model Story {
+  id              String    @id @default(cuid())
+  slug            String    @unique
+  
+  // Metadata
+  title           String
+  titleHi         String?
+  excerpt         String
+  excerptHi       String?
+  
+  // Person (always anonymized)
+  personName      String    // "Ravi" — first name only
+  personCity      String    // "Kanpur"
+  personAge       Int
+  barrierType     String    // which barrier they overcame
+  
+  // Content (Markdown)
+  content         String    @db.Text
+  contentHi       String?   @db.Text
+  
+  // Media
+  imageUrl        String?
+  
+  isPublished     Boolean   @default(false)
+  publishedAt     DateTime?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@map("stories")
+}
+
+// ─────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────
+
+enum Language {
+  EN
+  HI
+}
+
+enum Pathway {
+  MENTAL
+  PHYSICAL
+  FATIGUE
+  GENERAL
+}
+
+enum RiskLevel {
+  LOW
+  MODERATE
+  WORTH_ATTENTION
+}
+
+enum ResourceType {
+  HOSPITAL
+  CLINIC
+  PHARMACY
+  MENTAL_HEALTH
+  AYUSHMAN_CENTER
+  JAN_AUSHADHI
+  TELEMEDICINE
+}

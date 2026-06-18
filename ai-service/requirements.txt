@@ -1,0 +1,12 @@
+# These packages are required to run the kaggle_train.py and the FastAPI server.
+# If your IDE is complaining about missing imports like `torch` or `transformers`,
+# you can install these locally by running: pip install -r requirements.txt
+
+fastapi
+uvicorn
+pydantic
+transformers
+torch
+datasets
+scikit-learn
+huggingface_hub

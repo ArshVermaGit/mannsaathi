@@ -1,0 +1,29 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test
+
+  deploy-ai-service:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and push Docker image
+        run: |
+          docker build -t mannsaathi-ai ./ai-service
+          docker tag mannsaathi-ai registry.railway.app/mannsaathi-ai:latest
+          # docker push registry.railway.app/mannsaathi-ai:latest (Mocked for safety)
+      - name: Deploy to Railway
+        run: echo "railway deploy --service mannsaathi-ai"
