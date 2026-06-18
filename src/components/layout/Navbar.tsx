@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Heart, Menu, Globe } from "lucide-react";
+import Image from "next/image";
+import { Menu, Globe } from "lucide-react";
 
 export function Navbar() {
   return (
@@ -7,12 +8,12 @@ export function Navbar() {
       <div className="container mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
         
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-surface-800 border border-surface-700 group-hover:border-primary-500 transition-colors">
-            <Heart className="w-4 h-4 text-primary-500" />
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="relative flex items-center justify-center w-10 h-10 overflow-hidden rounded-full border border-surface-700 group-hover:border-primary-500 transition-colors bg-surface-800">
+            <Image src="/logo.png" alt="MannSaathi Logo" fill className="object-cover" />
             <div className="absolute inset-0 pulse-ring rounded-full opacity-0 group-hover:opacity-30 transition-opacity" />
           </div>
-          <span className="font-display font-bold text-xl tracking-tight text-text-primary">
+          <span className="font-display font-bold text-xl tracking-tight text-text-primary hidden sm:inline-block">
             Mann<span className="text-primary-500">Saathi</span>
           </span>
         </Link>

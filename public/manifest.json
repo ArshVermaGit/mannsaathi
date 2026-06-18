@@ -1,17 +1,21 @@
 {
-  "name": "MannSaathi — Healthcare Without Fear",
+  "name": "MannSaathi",
   "short_name": "MannSaathi",
-  "description": "Your trusted health companion. Anonymous. Judgment-free.",
+  "description": "A behavioral companion that transforms hesitation into health action.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#131210",
-  "theme_color": "#F59E0B",
-  "orientation": "portrait",
+  "background_color": "#09090b",
+  "theme_color": "#14b8a6",
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
-  ],
-  "categories": ["health", "medical"],
-  "lang": "hi"
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }

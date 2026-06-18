@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -7,8 +7,10 @@ export function Footer() {
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2">
-              <Heart className="w-5 h-5 text-primary-500" />
+            <Link href="/" className="flex items-center gap-3">
+              <div className="relative w-8 h-8 rounded-full overflow-hidden border border-surface-700">
+                <Image src="/logo.png" alt="MannSaathi Logo" fill className="object-cover" />
+              </div>
               <span className="font-display font-bold text-xl text-text-primary">
                 Mann<span className="text-primary-500">Saathi</span>
               </span>

@@ -27,8 +27,26 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MannSaathi",
+  title: "MannSaathi | Der Asli Bimari Hai. Hum Ilaaj Hai.",
   description: "A behavioral companion that understands human hesitation and transforms it into confident, timely health action.",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
+  openGraph: {
+    title: "MannSaathi",
+    description: "A behavioral companion that transforms hesitation into health action.",
+    images: [{ url: "/logo.png", width: 800, height: 800, alt: "MannSaathi Logo" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MannSaathi",
+    description: "A behavioral companion that transforms hesitation into health action.",
+    images: ["/logo.png"],
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
