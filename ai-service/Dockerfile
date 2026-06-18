@@ -8,11 +8,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy app
 COPY app/ app/
-COPY weights/ weights/
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s \
-  CMD curl -f http://localhost:8000/health || exit 1
+  CMD curl -f http://localhost:$PORT/health || exit 1
 
-# Run
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
+# Run (Render provides the $PORT environment variable)
+CMD sh -c "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-10000} --workers 2"
