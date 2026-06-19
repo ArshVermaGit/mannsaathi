@@ -34,7 +34,7 @@ export function FeaturesGrid() {
   ];
 
   return (
-    <section className="py-24 bg-surface-950 px-6">
+    <section className="py-16 md:py-24 bg-surface-950 px-6">
       <div className="max-w-6xl mx-auto">
         <h2 className="font-display font-bold text-4xl mb-16 text-center">
           {t("features.title")}

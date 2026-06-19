@@ -45,14 +45,10 @@ def main():
     print("🚀 Starting MannSaathi MASSIVE AI Training Pipeline")
     
     # 1. Login to Hugging Face
-    print("\n🔑 Logging into Hugging Face...")
-    # NOTE: Replace 'YOUR_HF_TOKEN_HERE' with your actual token before running!
-    HF_TOKEN = "YOUR_HF_TOKEN_HERE" 
-    
-    if HF_TOKEN == "YOUR_HF_TOKEN_HERE":
-        print("⚠️ WARNING: You did not replace 'YOUR_HF_TOKEN_HERE' with your actual token. The upload at the end will fail!")
-    else:
-        login(token=HF_TOKEN)
+    print("\n🔑 Please enter your Hugging Face Token (with WRITE access):")
+    # In a notebook, use notebook_login(), here we use login()
+    from huggingface_hub import notebook_login
+    notebook_login()
     
     # 2. Load Massive Combined Datasets
     print("\n📊 Loading Massive Multilingual Medical Datasets...")

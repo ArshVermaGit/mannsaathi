@@ -34,7 +34,7 @@ export function SignOutButton() {
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                className="bg-surface-800 border border-surface-700 rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl relative overflow-y-auto max-h-[95vh] text-center"
+                className="bg-surface-800 border border-surface-700 rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl relative overflow-y-auto max-h-[85dvh] text-center"
               >
                 <button 
                   onClick={() => setShowModal(false)}

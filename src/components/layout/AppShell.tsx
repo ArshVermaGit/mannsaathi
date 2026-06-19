@@ -14,7 +14,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   if (isCheckFlow) {
     return (
-      <div className="flex flex-col min-h-screen bg-surface-900">
+      <div className="flex flex-col min-h-[100dvh] bg-surface-900">
         <header className="h-16 flex items-center px-4 md:px-8 border-b border-surface-800">
           <Link href="/" className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors text-sm font-medium">
             <ChevronLeft className="w-4 h-4" /> Exit to Home
@@ -33,7 +33,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   if (isChat) {
     return (
-      <div className="flex flex-col h-screen bg-surface-900 overflow-hidden">
+      <div className="flex flex-col h-[100dvh] bg-surface-900 overflow-hidden">
         <header className="h-16 flex items-center px-4 md:px-8 border-b border-surface-800 shrink-0">
           <Link href="/" className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors text-sm font-medium">
             <ChevronLeft className="w-4 h-4" /> Back
@@ -53,7 +53,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   // Default App Shell for Community, Resources, Moments, Bhai Mode
   return (
-    <div className="flex flex-col min-h-screen bg-surface-900">
+    <div className="flex flex-col min-h-[100dvh] bg-surface-900">
       <Navbar />
       <main className="flex-1 container mx-auto px-4 md:px-8 py-8">{children}</main>
       <Footer />

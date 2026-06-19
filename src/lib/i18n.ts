@@ -111,13 +111,6 @@ const translations = {
   "footer.product": { en: "Product", hi: "उत्पाद" },
   "footer.symptomChecker": { en: "Symptom Checker", hi: "लक्षण जाँचकर्ता" },
   "footer.aiCompanion": { en: "AI Companion", hi: "AI साथी" },
-  "footer.healthMoments": { en: "Health Moments", hi: "स्वास्थ्य पल" },
-  "footer.bhaiMode": { en: "Bhai Mode", hi: "भाई मोड" },
-  "footer.resources": { en: "Resources", hi: "संसाधन" },
-  "footer.freeCareFinder": { en: "Free Care Finder", hi: "मुफ्त देखभाल खोजक" },
-  "footer.communityPulse": { en: "Community Pulse", hi: "सामुदायिक नब्ज" },
-  "footer.realStories": { en: "Real Stories", hi: "सच्ची कहानियाँ" },
-  "footer.aboutUs": { en: "About Us", hi: "हमारे बारे में" },
   "footer.copyright": { en: "© 2026 MannSaathi. 100% Anonymous.", hi: "© 2026 मन-साथी। 100% गुमनाम।" },
   "footer.privacy": { en: "Privacy Policy", hi: "गोपनीयता नीति" },
   "footer.terms": { en: "Terms of Service", hi: "सेवा की शर्तें" },
@@ -227,24 +220,6 @@ const translations = {
   "signIn.or": { en: "or", hi: "या" },
   "signIn.continueGoogle": { en: "Continue with Google", hi: "Google के साथ जारी रखें" },
   "signIn.privacy": { en: "We never share your health data", hi: "हम कभी भी आपका स्वास्थ्य डेटा साझा नहीं करते हैं" },
-
-  // Resources Page
-  "resources.title": { en: "Free Care Finder", hi: "मुफ्त देखभाल खोजक" },
-  "resources.subtitle": { en: "Find zero-cost or heavily subsidized healthcare options near you.", hi: "अपने आस-पास शून्य-लागत या भारी सब्सिडी वाले स्वास्थ्य सेवा विकल्प खोजें।" },
-  "resources.searchPlaceholder": { en: "Search clinics, schemes, or medicines...", hi: "क्लिनिक, योजनाएं या दवाएं खोजें..." },
-  "resources.location": { en: "Lucknow", hi: "लखनऊ" },
-  "resources.filterAll": { en: "All", hi: "सभी" },
-  "resources.filterGeneral": { en: "General Checkup", hi: "सामान्य जाँच" },
-  "resources.filterMental": { en: "Mental Health", hi: "मानसिक स्वास्थ्य" },
-  "resources.filterMeds": { en: "Free Medicines", hi: "मुफ्त दवाएं" },
-  "resources.filterWomen": { en: "Women's Health", hi: "महिलाओं का स्वास्थ्य" },
-  "resources.storeName": { en: "Jan Aushadhi Store", hi: "जन औषधि केंद्र" },
-  "resources.distance": { en: "Gomti Nagar, 0.8 km away", hi: "गोमती नगर, 0.8 किमी दूर" },
-  "resources.openNow": { en: "Open Now", hi: "अभी खुला है" },
-  "resources.tag1": { en: "Subsidized Medicines", hi: "सब्सिडी वाली दवाएं" },
-  "resources.tag2": { en: "Walk-in", hi: "वॉक-इन" },
-  "resources.directions": { en: "Directions", hi: "रास्ता" },
-  "resources.call": { en: "Call", hi: "कॉल करें" },
 
 } as const;
 

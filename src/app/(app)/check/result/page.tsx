@@ -319,7 +319,7 @@ export default function ResultPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-md overflow-hidden bg-surface-800 border border-surface-700 rounded-3xl p-6 md:p-8 shadow-2xl text-center"
+              className="relative w-full max-w-md overflow-y-auto max-h-[85dvh] bg-surface-800 border border-surface-700 rounded-3xl p-6 md:p-8 shadow-2xl text-center"
             >
               <h2 className="font-display font-bold text-2xl text-text-primary mb-4">
                 {t("saveModal.title")}

@@ -33,7 +33,7 @@ export function HeroSection() {
           variants={variants.staggerContainer}
           initial="initial"
           animate="animate"
-          className="font-display font-bold text-5xl md:text-7xl leading-tight text-text-primary flex flex-wrap justify-center gap-x-4 gap-y-2"
+          className="font-display font-bold text-4xl sm:text-5xl md:text-7xl leading-tight text-text-primary flex flex-wrap justify-center gap-x-4 gap-y-2"
         >
           {words.map((word, i) => (
             <motion.span

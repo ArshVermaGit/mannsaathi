@@ -67,13 +67,19 @@
 
 /* ── Chat Bubbles ── */
 .bubble {
-  max-width: 80%;
+  max-width: 90%;
   padding: 0.75rem 1rem;
   border-radius: 1.125rem;
   font-size: 0.9375rem;
   line-height: 1.65;
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+  .bubble {
+    max-width: 75%;
+  }
 }
 
 .bubbleAssistant {
@@ -155,7 +161,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0.75rem 1rem 1rem;
+  padding: 0.75rem 1rem max(1rem, env(safe-area-inset-bottom));
   background: linear-gradient(
     to top,
     var(--color-surface-900, #1a1400) 55%,

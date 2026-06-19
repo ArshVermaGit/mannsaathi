@@ -3,7 +3,6 @@ import { persist } from 'zustand/middleware'
 
 interface UserPreferences {
   language: 'en' | 'hi'
-  bhaiModeEnabled: boolean
   locationCity: string | null
   locationPermissionGranted: boolean
   hasCompletedOnboarding: boolean
@@ -13,7 +12,6 @@ interface UserPreferences {
   
   setLanguage: (lang: 'en' | 'hi') => void
   setHasSelectedLanguage: (value: boolean) => void
-  toggleBhaiMode: () => void
   setLocation: (city: string) => void
   completeOnboarding: () => void
   recordCheck: () => void
@@ -23,7 +21,6 @@ export const useUserStore = create<UserPreferences>()(
   persist(
     (set, get) => ({
       language: 'hi',
-      bhaiModeEnabled: false,
       locationCity: null,
       locationPermissionGranted: false,
       hasCompletedOnboarding: false,
@@ -33,10 +30,6 @@ export const useUserStore = create<UserPreferences>()(
       
       setLanguage: (lang) => set({ language: lang }),
       setHasSelectedLanguage: (value) => set({ hasSelectedLanguage: value }),
-      
-      toggleBhaiMode: () => set((state) => ({
-        bhaiModeEnabled: !state.bhaiModeEnabled
-      })),
       
       setLocation: (city) => set({ 
         locationCity: city,

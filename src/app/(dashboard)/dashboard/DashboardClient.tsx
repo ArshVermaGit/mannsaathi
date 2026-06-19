@@ -15,15 +15,15 @@ export function DashboardClient({ session, logs }: DashboardClientProps) {
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       <div className="bg-surface-800 border border-surface-700 rounded-3xl p-8 mb-8">
-        <div className="flex items-center gap-6">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 text-center md:text-left">
           {session.user.image && (
-            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary-500">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-primary-500 shrink-0">
               <Image 
                 src={session.user.image} 
                 alt="Profile" 
                 width={96} 
                 height={96} 
-                className="object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
           )}

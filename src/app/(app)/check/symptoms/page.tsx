@@ -74,7 +74,7 @@ export default function SymptomsPage() {
         {/* Duration */}
         <div className="space-y-3">
           <label className="text-sm font-medium text-text-secondary">{t("symptoms.howLong")}</label>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {[
               { label: t("symptoms.fewDays"), days: 3 },
               { label: t("symptoms.weeks"), days: 14 },
