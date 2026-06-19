@@ -183,10 +183,16 @@ const translations = {
   "how.s3.desc": { en: "Real options, from 5-minute home relief to free local clinics.", hi: "असली विकल्प, 5 मिनट के घरेलू उपाय से लेकर मुफ्त स्थानीय क्लिनिक तक।" },
 
   // Landing Page - Cost Comparison
-  "cost.title": { en: "Can't afford it? Think again.", hi: "खर्च नहीं उठा सकते? फिर से सोचें।" },
-  "cost.mobile": { en: "Monthly Mobile Data", hi: "मासिक मोबाइल डेटा" },
-  "cost.bp": { en: "Blood Pressure Check", hi: "ब्लड प्रेशर जाँच" },
-  "cost.ayushman": { en: "via Ayushman", hi: "आयुष्मान के माध्यम से" },
+  // Features Grid
+  "features.title": { en: "Why choose MannSaathi?", hi: "मन-साथी ही क्यों?" },
+  "features.fast.title": { en: "Lightning Fast", hi: "बिजली सी तेज़" },
+  "features.fast.desc": { en: "Get AI-powered health analysis instantly, anytime.", hi: "तुरंत एआई (AI) द्वारा स्वास्थ्य विश्लेषण प्राप्त करें, कभी भी।" },
+  "features.free.title": { en: "100% Free", hi: "100% मुफ़्त" },
+  "features.free.desc": { en: "Quality health screening shouldn't cost you a rupee.", hi: "अच्छी स्वास्थ्य जांच के लिए आपको एक रुपया भी खर्च नहीं करना चाहिए।" },
+  "features.anonymous.title": { en: "Completely Anonymous", hi: "पूरी तरह से गुमनाम" },
+  "features.anonymous.desc": { en: "No signup required. Your data is never saved or sold.", hi: "कोई साइनअप की आवश्यकता नहीं। आपका डेटा कभी सहेजा या बेचा नहीं जाता।" },
+  "features.cultural.title": { en: "Culturally Aware", hi: "सांस्कृतिक रूप से जागरूक" },
+  "features.cultural.desc": { en: "Speaks your language. Built to understand Hinglish & local context.", hi: "आपकी भाषा बोलता है। हिंग्लिश और स्थानीय संदर्भ को समझने के लिए बनाया गया।" },
   "cost.findFree": { en: "Find free care near me", hi: "मेरे पास मुफ्त देखभाल खोजें" },
 
   // Landing Page - Final CTA

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight, HeartPulse, Users, Activity, IndianRupee, Clock, ShieldCheck } from "lucide-react";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { BarrierCards } from "@/components/landing/BarrierCards";
-import { CostComparison } from "@/components/landing/CostComparison";
+import { FeaturesGrid } from "@/components/landing/FeaturesGrid";
 import { useTranslation } from "@/hooks/useTranslation";
 
 export default function LandingPage() {
@@ -40,7 +40,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <CostComparison />
+      <FeaturesGrid />
 
       {/* Final CTA */}
       <section className="py-32 relative overflow-hidden text-center">
