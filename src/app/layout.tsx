@@ -1,31 +1,9 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Noto_Sans, JetBrains_Mono, Outfit } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { Providers } from "./providers";
 import SkipLink from "@/components/ui/SkipLink";
 import { LanguageModal } from "@/components/ui/LanguageModal";
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-display",
-  subsets: ["latin"],
-});
-
-const notoSans = Noto_Sans({
-  variable: "--font-body",
-  subsets: ["latin", "devanagari"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "MannSaathi | Der Asli Bimari Hai. Hum Ilaaj Hai.",
@@ -56,11 +34,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${spaceGrotesk.variable} ${notoSans.variable} ${jetbrainsMono.variable} ${outfit.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Noto+Sans:wght@400;500;600;700&family=Outfit:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+      </head>
       <body className="min-h-full flex flex-col font-body antialiased bg-background text-foreground selection:bg-primary/20 selection:text-primary">
         <ThemeProvider
           attribute="class"

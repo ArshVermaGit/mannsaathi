@@ -56,6 +56,7 @@ const translations = {
   "result.saveResults": { en: "Save my results", hi: "मेरे परिणाम सहेजें" },
   "result.seeNextSteps": { en: "See Next Steps", hi: "अगले कदम देखें" },
   "result.backToHome": { en: "Return Home", hi: "होम पर वापस जाएं" },
+  "result.analyzing": { en: "Analyzing...", hi: "विश्लेषण कर रहा है..." },
 
   // Save Modal
   "saveModal.title": { en: "Save Your Results?", hi: "क्या आप अपने परिणाम सहेजना चाहते हैं?" },
