@@ -6,6 +6,7 @@ import SkipLink from "@/components/ui/SkipLink";
 import { LanguageModal } from "@/components/ui/LanguageModal";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.AUTH_URL || process.env.NEXTAUTH_URL || "https://mannsaathi-mukk.onrender.com"),
   title: "MannSaathi | Der Asli Bimari Hai. Hum Ilaaj Hai.",
   description: "A behavioral companion that understands human hesitation and transforms it into confident, timely health action.",
   icons: {
