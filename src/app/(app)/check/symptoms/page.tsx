@@ -3,9 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useSymptomStore } from "@/store/symptomStore";
 import { ArrowRight } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function SymptomsPage() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { 
     selectedSymptomIds, toggleSymptom, 
     customText, setCustomText, 
@@ -21,22 +23,29 @@ export default function SymptomsPage() {
     <div className="flex-1 flex flex-col p-4 md:p-8 max-w-3xl mx-auto w-full">
       <div className="space-y-4 mb-8">
         <h1 className="font-display font-bold text-3xl md:text-4xl text-text-primary">
-          What have you been noticing?
+          {t("symptoms.title")}
         </h1>
-        <p className="text-text-secondary">Select all that apply or describe it below.</p>
+        <p className="text-text-secondary">{t("symptoms.subtitle")}</p>
       </div>
 
       <div className="space-y-8 flex-1">
         {/* Chips */}
         <div className="flex flex-wrap gap-3">
-          {["Headaches", "Chest tightness", "Trouble sleeping", "Low energy", "Mood changes", "Body aches"].map((symptom) => {
-            const isSelected = selectedSymptomIds.includes(symptom);
+          {[
+            { id: "Headaches", label: t("symptoms.headaches") },
+            { id: "Chest tightness", label: t("symptoms.chestTightness") },
+            { id: "Trouble sleeping", label: t("symptoms.troubleSleeping") },
+            { id: "Low energy", label: t("symptoms.lowEnergy") },
+            { id: "Mood changes", label: t("symptoms.moodChanges") },
+            { id: "Body aches", label: t("symptoms.bodyAches") }
+          ].map((symptom) => {
+            const isSelected = selectedSymptomIds.includes(symptom.id);
             return (
               <button 
-                key={symptom} 
-                onClick={() => toggleSymptom(symptom)}
+                key={symptom.id} 
+                onClick={() => toggleSymptom(symptom.id)}
                 aria-pressed={isSelected}
-                aria-label={`${symptom} — ${isSelected ? 'selected' : 'not selected'}`}
+                aria-label={`${symptom.label} — ${isSelected ? 'selected' : 'not selected'}`}
                 className={`px-4 py-2 rounded-full border transition-colors font-medium min-h-[44px] min-w-[44px]
                   ${isSelected 
                     ? "border-primary-500 bg-primary-500/20 text-primary-400" 
@@ -44,7 +53,7 @@ export default function SymptomsPage() {
                   }
                 `}
               >
-                {symptom}
+                {symptom.label}
               </button>
             );
           })}
@@ -52,26 +61,25 @@ export default function SymptomsPage() {
 
         {/* Text Input */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-text-secondary">Describe in your own words</label>
+          <label className="text-sm font-medium text-text-secondary">{t("symptoms.describeLabel")}</label>
           <textarea 
             value={customText}
             onChange={(e) => setCustomText(e.target.value)}
-            aria-label="Describe your symptoms in your own words"
-            lang="en"
+            aria-label={t("symptoms.describeLabel")}
             className="w-full bg-surface-800 border border-surface-700 rounded-xl p-4 text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-primary-500 transition-colors min-h-[100px]"
-            placeholder="I've been feeling unusually tired after work and having trouble falling asleep..."
+            placeholder={t("symptoms.placeholder")}
           />
         </div>
 
         {/* Duration */}
         <div className="space-y-3">
-          <label className="text-sm font-medium text-text-secondary">How long has this been happening?</label>
+          <label className="text-sm font-medium text-text-secondary">{t("symptoms.howLong")}</label>
           <div className="flex gap-2">
             {[
-              { label: "A few days", days: 3 },
-              { label: "Weeks", days: 14 },
-              { label: "Months", days: 60 },
-              { label: "Over a year", days: 365 }
+              { label: t("symptoms.fewDays"), days: 3 },
+              { label: t("symptoms.weeks"), days: 14 },
+              { label: t("symptoms.months"), days: 60 },
+              { label: t("symptoms.overYear"), days: 365 }
             ].map((dur) => (
               <button 
                 key={dur.days} 
@@ -97,17 +105,17 @@ export default function SymptomsPage() {
           aria-valuenow={2} 
           aria-valuemin={1} 
           aria-valuemax={4} 
-          aria-label="Step 2 of 4"
+          aria-label={`${t("step")} 2 ${t("of")} 4`}
           className="text-text-tertiary text-sm font-mono"
         >
-          Step 2 of 4
+          {t("step")} 2 {t("of")} 4
         </div>
         <button 
           onClick={handleContinue}
           disabled={!customText && selectedSymptomIds.length === 0}
           className="bg-primary-500 disabled:opacity-50 hover:bg-primary-400 text-surface-900 font-display font-semibold px-6 py-3 rounded-xl transition-all duration-200 flex items-center gap-2"
         >
-          Continue <ArrowRight className="w-5 h-5" />
+          {t("symptoms.continue")} <ArrowRight className="w-5 h-5" />
         </button>
       </div>
     </div>

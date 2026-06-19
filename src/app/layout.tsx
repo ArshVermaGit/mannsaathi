@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { Providers } from "./providers";
 import SkipLink from "@/components/ui/SkipLink";
+import { LanguageModal } from "@/components/ui/LanguageModal";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -68,6 +69,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Providers>
+            <LanguageModal />
             <SkipLink />
             <main id="main-content" className="flex-1 flex flex-col">
               {children}

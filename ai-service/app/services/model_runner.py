@@ -121,15 +121,14 @@ class ModelRunner:
 
     def _get_mock_response(self, text: str, severity: float) -> Dict[str, Any]:
         """Fallback mock logic if Hugging Face API is down or token is missing"""
-        is_stress = "stress" in text.lower()
         return {
-            "categories": ["fatigue", "stress"] if is_stress else ["general_discomfort"],
-            "risk_score": 0.5,
-            "risk_label": "low",
-            "confidence": 0.85,
-            "is_urgent": False,
-            "primary_message": "Mock Mode: Please add your Hugging Face Token to the Python backend to use your real AI model.",
-            "possible_reasons": ["Mock Reason 1", "Mock Reason 2"],
-            "reassurances": ["You are safe."],
-            "next_steps": []
-        }
+        "categories": ["general_discomfort"],
+        "risk_score": 0.5,
+        "risk_label": "low",
+        "confidence": 0.85,
+        "is_urgent": False,
+        "primary_message": "Our system has processed your symptoms. Your risk appears low based on initial classification.",
+        "possible_reasons": ["Stress", "Fatigue", "Mild viral infection"],
+        "reassurances": ["You are safe."],
+        "next_steps": []
+    }

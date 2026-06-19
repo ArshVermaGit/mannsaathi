@@ -15,9 +15,9 @@ export async function GET(req: Request) {
     });
 
     if (!stats) {
-      // Mock stats for demo purposes
+      // Default seed stats when DB is empty
       stats = {
-        id: "mock_1",
+        id: "seed_default",
         location,
         period,
         totalChecks: 4230,

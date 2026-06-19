@@ -1,150 +1,208 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Send, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useChatStore } from "@/store/chatStore";
-import { useMutation } from "@tanstack/react-query";
+import { useTranslation } from "@/hooks/useTranslation";
+import styles from "./ChatWindow.module.css";
+
+interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+}
+
+/** Convert basic markdown to HTML */
+function renderMarkdown(text: string): string {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/__(.*?)__/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/^(\d+[\.\)]\s)/gm, '<span class="list-num">$1</span>')
+    .replace(/^[-•]\s/gm, '<span class="list-bullet">• </span>')
+    .replace(/\n/g, '<br/>');
+}
 
 export function ChatWindow() {
+  const { t } = useTranslation();
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { messages, addMessage, isLoading, setLoading, quickReplies, conversationId } = useChatStore();
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const chatMutation = useMutation({
-    mutationFn: async (text: string) => {
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading, scrollToBottom]);
+
+  const handleSend = async (text: string) => {
+    if (!text.trim() || isLoading) return;
+
+    const userMessage: ChatMessage = {
+      id: Date.now().toString(),
+      role: "user",
+      content: text.trim(),
+    };
+
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
+    setInput("");
+    inputRef.current?.focus();
+    setIsLoading(true);
+
+    try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          session_id: conversationId,
-          text,
-          language: "en", // could get from userStore
-          history: messages.map(m => ({ role: m.role, content: m.content }))
-        })
+          messages: updatedMessages.map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        }),
       });
-      if (!response.ok) throw new Error("Network response was not ok");
-      return response.json();
-    },
-    onSuccess: (data) => {
-      addMessage({ role: "assistant", content: data.response });
-      // If the API returned quick replies, we could set them here
-    },
-    onSettled: () => {
-      setLoading(false);
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `Server error: ${response.status}`);
+      }
+
+      const assistantId = (Date.now() + 1).toString();
+      setMessages((prev) => [
+        ...prev,
+        { id: assistantId, role: "assistant", content: "" },
+      ]);
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      if (!reader) throw new Error("No response stream");
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value, { stream: true });
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === assistantId
+              ? { ...msg, content: msg.content + chunk }
+              : msg
+          )
+        );
+      }
+    } catch (error: unknown) {
+      console.error("Chat error:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: (Date.now() + 2).toString(),
+          role: "assistant",
+          content: t("chat.error"),
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
     }
-  });
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading]);
-
-  const handleSend = (text: string) => {
-    if (!text.trim()) return;
-    addMessage({ role: "user", content: text.trim() });
-    setInput("");
-    setLoading(true);
-    chatMutation.mutate(text.trim());
   };
 
   return (
-    <div className="flex flex-col h-full relative">
-      <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 max-w-3xl mx-auto w-full pb-32">
-        {/* Initial Greeting if no messages */}
-        {messages.length === 0 && (
-          <div className="flex gap-4">
-            <div className="w-10 h-10 rounded-full bg-primary-500/20 flex items-center justify-center shrink-0 border border-primary-500/30">
-              <span className="text-xl">🙏</span>
+    <div className={styles.container}>
+      <div className={styles.messages}>
+        {/* Greeting */}
+        {messages.length === 0 && !isLoading && (
+          <>
+            <div className={`${styles.row} ${styles.rowAssistant}`}>
+              <div className={`${styles.avatar} ${styles.avatarAssistant}`}>🙏</div>
+              <div className={`${styles.bubble} ${styles.bubbleAssistant}`}>
+                <p>{t("chat.greeting1")}</p>
+                <p style={{ marginTop: "0.5rem" }}>{t("chat.greeting2")}</p>
+              </div>
             </div>
-            <div className="bg-surface-800 border border-surface-700 rounded-2xl rounded-tl-sm p-4 text-text-primary max-w-[85%]">
-              <p>Namaste. I'm here to listen, not judge.</p>
-              <p className="mt-2">What's on your mind today?</p>
+            <div className={styles.quickReplies}>
+              {[
+                t("chat.quick1"),
+                t("chat.quick2"),
+                t("chat.quick3"),
+                t("chat.quick4"),
+              ].map((reply, i) => (
+                <button key={i} onClick={() => handleSend(reply)} className={styles.quickBtn}>
+                  {reply}
+                </button>
+              ))}
             </div>
-          </div>
+          </>
         )}
 
-        {/* Message History */}
+        {/* Chat Messages */}
         <AnimatePresence initial={false}>
           {messages.map((msg) => (
-            <motion.div 
-              key={msg.id} 
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-              className={`flex gap-4 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
+            <motion.div
+              key={msg.id}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className={`${styles.row} ${msg.role === "user" ? styles.rowUser : styles.rowAssistant}`}
             >
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 border ${
-                msg.role === "user" 
-                  ? "bg-surface-700 border-surface-600" 
-                  : "bg-primary-500/20 border-primary-500/30"
-              }`}>
-                {msg.role === "user" ? <span className="text-xl">👤</span> : <span className="text-xl">🙏</span>}
+              {msg.role === "assistant" && (
+                <div className={`${styles.avatar} ${styles.avatarAssistant}`}>🙏</div>
+              )}
+              <div className={`${styles.bubble} ${msg.role === "user" ? styles.bubbleUser : styles.bubbleAssistant}`}>
+                {msg.role === "assistant" ? (
+                  <div
+                    className={styles.markdown}
+                    dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }}
+                  />
+                ) : (
+                  <span>{msg.content}</span>
+                )}
               </div>
-              <div className={`rounded-2xl p-4 text-text-primary max-w-[85%] ${
-                msg.role === "user"
-                  ? "bg-primary-500/10 border border-primary-500/20 rounded-tr-sm"
-                  : "bg-surface-800 border border-surface-700 rounded-tl-sm"
-              }`}>
-                <p className="whitespace-pre-wrap">{msg.content}</p>
-              </div>
+              {msg.role === "user" && (
+                <div className={`${styles.avatar} ${styles.avatarUser}`}>👤</div>
+              )}
             </motion.div>
           ))}
         </AnimatePresence>
 
-        {/* Loading Indicator */}
-        {isLoading && (
-          <div className="flex gap-4">
-            <div className="w-10 h-10 rounded-full bg-primary-500/20 flex items-center justify-center shrink-0 border border-primary-500/30">
-              <span className="text-xl">🙏</span>
+        {/* Typing */}
+        {isLoading && messages.length > 0 && messages[messages.length - 1].role === "user" && (
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`${styles.row} ${styles.rowAssistant}`}
+          >
+            <div className={`${styles.avatar} ${styles.avatarAssistant}`}>🙏</div>
+            <div className={`${styles.bubble} ${styles.bubbleAssistant} ${styles.typingBubble}`}>
+              <Loader2 className={styles.spinner} />
+              <span className={styles.typingText}>{t("chat.thinking")}</span>
             </div>
-            <div className="bg-surface-800 border border-surface-700 rounded-2xl rounded-tl-sm p-4 text-text-primary max-w-[85%] flex items-center gap-2">
-              <Loader2 className="w-4 h-4 animate-spin text-primary-500" />
-              <span className="text-text-secondary text-sm">Typing...</span>
-            </div>
-          </div>
+          </motion.div>
         )}
 
-        {/* Quick Replies */}
-        {messages.length === 0 && quickReplies.length === 0 && (
-          <div className="flex flex-wrap gap-2 pt-4 pl-14">
-            {["I'm not feeling well", "I need to find a doctor", "I'm worried about something", "I just want to talk"].map((reply, i) => (
-              <button 
-                key={i} 
-                onClick={() => handleSend(reply)}
-                className="bg-surface-800 hover:bg-surface-700 border border-surface-600 text-text-secondary hover:text-text-primary text-sm px-4 py-2 rounded-full transition-colors"
-              >
-                {reply}
-              </button>
-            ))}
-          </div>
-        )}
-        
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Area */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background via-background to-transparent">
-        <div className="max-w-3xl mx-auto relative flex gap-2">
-          <input 
-            type="text" 
+      {/* Input */}
+      <div className={styles.inputWrapper}>
+        <form
+          onSubmit={(e) => { e.preventDefault(); handleSend(input); }}
+          className={styles.inputForm}
+        >
+          <input
+            ref={inputRef}
+            type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
-            placeholder="Type your message..." 
-            className="flex-1 bg-surface-800 border border-surface-600 rounded-full py-4 pl-6 pr-4 text-text-primary focus:outline-none focus:border-primary-500 transition-colors shadow-lg"
+            placeholder={t("chat.placeholder")}
+            disabled={isLoading}
+            className={styles.input}
           />
-          <button 
-            onClick={() => handleSend(input)}
-            disabled={!input.trim() || isLoading}
-            className="w-14 h-14 bg-primary-500 hover:bg-primary-400 disabled:opacity-50 disabled:hover:bg-primary-500 rounded-full flex items-center justify-center text-surface-900 transition-colors shrink-0"
-          >
-            <Send className="w-5 h-5 ml-0.5" />
+          <button type="submit" disabled={!input.trim() || isLoading} className={styles.sendBtn}>
+            <Send size={18} />
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );

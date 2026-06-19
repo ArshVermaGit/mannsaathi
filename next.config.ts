@@ -1,9 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Image optimization
   images: {
-    domains: ['pub-xxx.r2.dev'],  // Cloudflare R2
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pub-xxx.r2.dev',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      }
+    ],
     formats: ['image/avif', 'image/webp']
   },
   

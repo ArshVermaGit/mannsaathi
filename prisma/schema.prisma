@@ -35,6 +35,7 @@ model User {
   healthLogs        HealthLog[]
   communityContribs CommunityContribution[]
   nudgeHistory      NudgeHistory[]
+  chats             Chat[]
   
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
@@ -147,6 +148,35 @@ model HealthLog {
   createdAt       DateTime  @default(now())
   
   @@map("health_logs")
+}
+
+// ─────────────────────────────────────────
+// CHATS & MESSAGES
+// ─────────────────────────────────────────
+
+model Chat {
+  id        String    @id @default(cuid())
+  userId    String
+  title     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  Message[]
+
+  @@map("chats")
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  chatId    String
+  role      String   // 'user' or 'assistant'
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
 }
 
 // ─────────────────────────────────────────

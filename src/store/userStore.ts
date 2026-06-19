@@ -7,10 +7,12 @@ interface UserPreferences {
   locationCity: string | null
   locationPermissionGranted: boolean
   hasCompletedOnboarding: boolean
+  hasSelectedLanguage: boolean
   lastCheckDate: string | null
   streakDays: number
   
   setLanguage: (lang: 'en' | 'hi') => void
+  setHasSelectedLanguage: (value: boolean) => void
   toggleBhaiMode: () => void
   setLocation: (city: string) => void
   completeOnboarding: () => void
@@ -25,10 +27,12 @@ export const useUserStore = create<UserPreferences>()(
       locationCity: null,
       locationPermissionGranted: false,
       hasCompletedOnboarding: false,
+      hasSelectedLanguage: false,
       lastCheckDate: null,
       streakDays: 0,
       
       setLanguage: (lang) => set({ language: lang }),
+      setHasSelectedLanguage: (value) => set({ hasSelectedLanguage: value }),
       
       toggleBhaiMode: () => set((state) => ({
         bhaiModeEnabled: !state.bhaiModeEnabled

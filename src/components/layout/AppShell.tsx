@@ -42,7 +42,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <div className="relative w-6 h-6 overflow-hidden rounded-full">
               <Image src="/logo.png" alt="Logo" fill className="object-cover" />
             </div>
-            MannSaathi <span className="text-primary-500">Saathi</span>
+            MannSaathi <span className="text-primary-500">AI</span>
           </div>
           <div className="w-20" /> {/* Spacer for centering */}
         </header>

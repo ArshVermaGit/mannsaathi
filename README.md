@@ -5,6 +5,11 @@
   <p><em>A behavioral companion that understands human hesitation and transforms it into confident, timely health action.</em></p>
 </div>
 
+<div align="center">
+  <a href="https://github.com/ArshVermaGit/mannsaathi"><strong>GitHub Repository</strong></a> ·
+  <a href="https://huggingface.co/ArshVerma/mannsaathi-symptom-classifier-large"><strong>AI Model (HuggingFace)</strong></a>
+</div>
+
 <br />
 
 ## 🌟 Overview

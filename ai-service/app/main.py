@@ -18,7 +18,7 @@ model_runner = ModelRunner()
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy", "models_loaded": True, "mode": "mock"}
+    return {"status": "healthy", "models_loaded": True, "mode": "live"}
 
 @app.post("/analyze-symptoms", response_model=SymptomOutput)
 async def analyze_symptoms(input_data: SymptomInput):

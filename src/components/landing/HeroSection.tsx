@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, ShieldCheck, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import { variants } from "@/lib/animations";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function HeroSection() {
   const router = useRouter();
-  const headline = "डर असली बीमारी है। हम इलाज हैं।";
+  const { t } = useTranslation();
+  const headline = t("hero.headline");
   const words = headline.split(' ');
 
   return (
@@ -24,7 +26,7 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="inline-block text-primary-400 font-mono text-sm tracking-widest uppercase mb-4"
         >
-          DesignVerse 2026 — Real Ideas. Real Impact.
+          {t("hero.tagline")}
         </motion.div>
         
         <motion.h1 
@@ -51,7 +53,7 @@ export function HeroSection() {
           animate="animate"
           className="font-body text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed pt-4"
         >
-          Thousands of people avoid doctors every day — not because care doesn't exist, but because taking the first step feels impossible. MannSaathi meets you where you are.
+          {t("hero.subtitle")}
         </motion.p>
         
         <motion.div 
@@ -64,13 +66,13 @@ export function HeroSection() {
             href="/check" 
             className="w-full sm:w-auto bg-primary-500 hover:bg-primary-400 text-surface-900 font-display font-semibold px-8 py-4 rounded-xl transition-all duration-200 hover:shadow-glow-primary flex items-center justify-center gap-2 text-lg"
           >
-            Check Your Symptoms — Anonymous
+            {t("hero.checkBtn")}
           </Link>
           <Link 
             href="/chat" 
             className="w-full sm:w-auto bg-transparent border border-surface-600 hover:border-primary-500 text-text-primary font-display font-medium px-8 py-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 text-lg"
           >
-            Or talk to MannSaathi <ArrowRight className="w-5 h-5" />
+            {t("hero.talkBtn")} <ArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>
         
@@ -80,11 +82,11 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.6 }}
           className="flex flex-wrap items-center justify-center gap-6 text-sm text-text-tertiary pt-8 font-medium"
         >
-          <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-accent-500" /> No login required</span>
+          <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-accent-500" /> {t("hero.feature1")}</span>
           <span className="hidden sm:inline">•</span>
-          <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-accent-500" /> No data sold</span>
+          <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-accent-500" /> {t("hero.feature2")}</span>
           <span className="hidden sm:inline">•</span>
-          <span className="flex items-center gap-2"><Clock className="w-4 h-4 text-accent-500" /> Under 5 minutes</span>
+          <span className="flex items-center gap-2"><Clock className="w-4 h-4 text-accent-500" /> {t("hero.feature3")}</span>
         </motion.div>
       </div>
     </section>

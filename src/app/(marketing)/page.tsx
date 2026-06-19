@@ -1,10 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, HeartPulse, Users, Activity, IndianRupee, Clock, ShieldCheck } from "lucide-react";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { BarrierCards } from "@/components/landing/BarrierCards";
 import { CostComparison } from "@/components/landing/CostComparison";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function LandingPage() {
+  const { t } = useTranslation();
   return (
     <div className="w-full">
       <HeroSection />
@@ -14,15 +18,15 @@ export default function LandingPage() {
       <section className="py-24" id="how-it-works">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16 space-y-4">
-            <h2 className="font-display font-bold text-4xl">One step at a time.</h2>
-            <p className="text-text-secondary text-lg">We never overwhelm you with choices.</p>
+            <h2 className="font-display font-bold text-4xl">{t("how.title")}</h2>
+            <p className="text-text-secondary text-lg">{t("how.subtitle")}</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { step: "01", title: "Tell us how you're feeling", desc: "Tap symptoms or describe them in your own words. No medical jargon required." },
-              { step: "02", title: "We listen without judgment", desc: "Our AI analyzes your symptoms calmly, without alarmist language." },
-              { step: "03", title: "We show you what's possible", desc: "Real options, from 5-minute home relief to free local clinics." },
+              { step: "01", title: t("how.s1.title"), desc: t("how.s1.desc") },
+              { step: "02", title: t("how.s2.title"), desc: t("how.s2.desc") },
+              { step: "03", title: t("how.s3.title"), desc: t("how.s3.desc") },
             ].map((item, i) => (
               <div key={i} className="relative p-8 rounded-3xl bg-surface-800/50 border border-surface-700/50">
                 <div className="text-primary-500/20 font-display font-bold text-7xl absolute top-4 right-6">{item.step}</div>
@@ -46,13 +50,13 @@ export default function LandingPage() {
         
         <div className="container mx-auto px-4 relative z-10 max-w-2xl space-y-8">
           <h2 className="font-display font-bold text-4xl md:text-5xl uppercase tracking-wide leading-tight">
-            Be the reason you choose your health today.
+            {t("cta.title")}
           </h2>
           <Link 
             href="/check" 
             className="inline-flex bg-primary-500 hover:bg-primary-400 text-surface-900 font-display font-semibold px-10 py-5 rounded-xl transition-all duration-200 hover:shadow-glow-primary active:scale-[0.98] text-xl items-center gap-3"
           >
-            Start Anonymous Check <ArrowRight className="w-6 h-6" />
+            {t("cta.btn")} <ArrowRight className="w-6 h-6" />
           </Link>
         </div>
       </section>

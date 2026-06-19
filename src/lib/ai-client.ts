@@ -28,6 +28,10 @@ export interface SymptomOutput {
   possible_reasons: string[];
   reassurances: string[];
   next_steps: NextStep[];
+  // New LLM Features
+  mechanics?: string;
+  lifestyle_advice?: string[];
+  doctor_questions?: string[];
 }
 
 export interface ChatMessage {
