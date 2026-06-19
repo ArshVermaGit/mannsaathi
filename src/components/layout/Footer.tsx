@@ -36,7 +36,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-display font-semibold text-text-primary mb-4">{t("footer.openSource")}</h4>
+            <h4 className="font-display font-semibold text-text-primary mb-4">{t("footer.links")}</h4>
             <ul className="space-y-2 text-sm text-text-secondary">
               <li>
                 <a href="https://github.com/ArshVermaGit/mannsaathi" target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors flex items-center gap-2">

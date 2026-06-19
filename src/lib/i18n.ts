@@ -120,11 +120,30 @@ const translations = {
   "footer.copyright": { en: "© 2026 MannSaathi. 100% Anonymous.", hi: "© 2026 मन-साथी। 100% गुमनाम।" },
   "footer.privacy": { en: "Privacy Policy", hi: "गोपनीयता नीति" },
   "footer.terms": { en: "Terms of Service", hi: "सेवा की शर्तें" },
-  "footer.openSource": { en: "Open Source", hi: "ओपन सोर्स" },
+  "footer.links": { en: "Links", hi: "लिंक्स" },
   "footer.github": { en: "GitHub Repository", hi: "गिटहब रिपोजिटरी" },
   "footer.aiModel": { en: "AI Model (HuggingFace)", hi: "AI मॉडल (हगिंगफेस)" },
   "footer.anonymous": { en: "100% Anonymous", hi: "100% गुमनाम" },
   "footer.exitHome": { en: "Exit to Home", hi: "होम पर जाएँ" },
+
+  // Legal Pages
+  "privacy.title": { en: "Privacy Policy", hi: "गोपनीयता नीति" },
+  "privacy.lastUpdated": { en: "Last updated: June 2026", hi: "अंतिम अपडेट: जून 2026" },
+  "privacy.s1.title": { en: "1. Absolute Anonymity Guarantee", hi: "1. पूर्ण गुमनामी की गारंटी" },
+  "privacy.s1.text": { en: "If you use MannSaathi without logging in, we absolutely guarantee that zero medical or behavioral data is saved to our databases. Your session data lives entirely in your browser and vanishes the moment you leave the site. We do not track IPs, we do not drop persistent cookies for anonymous users, and we do not sell data to third parties.", hi: "यदि आप लॉग इन किए बिना मन-साथी का उपयोग करते हैं, तो हम पूरी गारंटी देते हैं कि हमारे डेटाबेस में कोई चिकित्सा या व्यवहार संबंधी डेटा सहेजा नहीं जाता है। आपका सत्र डेटा पूरी तरह से आपके ब्राउज़र में रहता है और साइट छोड़ते ही मिट जाता है। हम आईपी ट्रैक नहीं करते हैं, हम गुमनाम उपयोगकर्ताओं के लिए कुकीज़ नहीं छोड़ते हैं, और हम तीसरे पक्ष को डेटा नहीं बेचते हैं।" },
+  "privacy.s2.title": { en: "2. Authenticated Users", hi: "2. प्रमाणित उपयोगकर्ता" },
+  "privacy.s2.text": { en: "If you actively choose to log in via Google to track your health history, we securely save your basic profile information (Name, Email, Avatar) and the historical symptom logs you generate. This data is strictly encrypted at rest using industry-standard protocols.", hi: "यदि आप अपने स्वास्थ्य इतिहास को ट्रैक करने के लिए Google के माध्यम से लॉग इन करना चुनते हैं, तो हम आपकी बुनियादी प्रोफ़ाइल जानकारी (नाम, ईमेल, अवतार) और आपके द्वारा उत्पन्न ऐतिहासिक लक्षण लॉग को सुरक्षित रूप से सहेजते हैं। यह डेटा उद्योग-मानक प्रोटोकॉल का उपयोग करके पूरी तरह से एन्क्रिप्ट किया गया है।" },
+  "privacy.s3.title": { en: "3. AI Processing", hi: "3. AI प्रोसेसिंग" },
+  "privacy.s3.text": { en: "The symptom text you enter is processed securely by our backend AI models. No personally identifiable information (PII) is ever sent to the AI unless you explicitly type it into the symptom box. The AI retains zero memory of your queries.", hi: "आपके द्वारा दर्ज किया गया लक्षण पाठ हमारे बैकएंड एआई मॉडल द्वारा सुरक्षित रूप से संसाधित किया जाता है। कोई भी व्यक्तिगत रूप से पहचान योग्य जानकारी (PII) कभी भी एआई को नहीं भेजी जाती है जब तक कि आप इसे स्पष्ट रूप से लक्षण बॉक्स में टाइप न करें। AI आपकी पूछताछ की कोई स्मृति नहीं रखता है।" },
+
+  "terms.title": { en: "Terms of Service", hi: "सेवा की शर्तें" },
+  "terms.lastUpdated": { en: "Last updated: June 2026", hi: "अंतिम अपडेट: जून 2026" },
+  "terms.s1.title": { en: "1. Not Medical Advice", hi: "1. चिकित्सा सलाह नहीं" },
+  "terms.s1.text": { en: "MannSaathi is a behavioral companion and AI triage tool designed to help you overcome hesitation. It is NOT a replacement for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.", hi: "मन-साथी एक व्यवहारिक साथी और AI ट्राइएज टूल है जिसे झिझक दूर करने में आपकी मदद करने के लिए डिज़ाइन किया गया है। यह पेशेवर चिकित्सा सलाह, निदान या उपचार का प्रतिस्थापन नहीं है। किसी भी चिकित्सीय स्थिति के संबंध में हमेशा अपने चिकित्सक या अन्य योग्य स्वास्थ्य प्रदाता की सलाह लें।" },
+  "terms.s2.title": { en: "2. Emergency Situations", hi: "2. आपातकालीन स्थितियाँ" },
+  "terms.s2.text": { en: "If you think you may have a medical emergency, call your doctor, go to the nearest hospital emergency department, or call emergency services immediately. Do not rely on electronic communications or this software for immediate, urgent medical needs.", hi: "यदि आपको लगता है कि आपको कोई चिकित्सीय आपात स्थिति हो सकती है, तो अपने डॉक्टर को कॉल करें, निकटतम अस्पताल के आपातकालीन विभाग में जाएँ, या तुरंत आपातकालीन सेवाओं को कॉल करें। तत्काल, जरूरी चिकित्सा आवश्यकताओं के लिए इलेक्ट्रॉनिक संचार या इस सॉफ़्टवेयर पर भरोसा न करें।" },
+  "terms.s3.title": { en: "3. Account Responsibilities", hi: "3. खाते की जिम्मेदारियां" },
+  "terms.s3.text": { en: "If you choose to create an account, you are responsible for maintaining the confidentiality of your login credentials via your Google account. We are not liable for any unauthorized access to your health history resulting from compromised Google credentials.", hi: "यदि आप खाता बनाना चुनते हैं, तो आप अपने Google खाते के माध्यम से अपने लॉगिन क्रेडेंशियल की गोपनीयता बनाए रखने के लिए जिम्मेदार हैं। हम Google क्रेडेंशियल से समझौता होने के परिणामस्वरूप आपके स्वास्थ्य इतिहास तक किसी भी अनधिकृत पहुंच के लिए उत्तरदायी नहीं हैं।" },
 
   // Landing Page - Hero
   "hero.tagline": { en: "DesignVerse 2026 — Real Ideas. Real Impact.", hi: "DesignVerse 2026 — असली विचार। असली प्रभाव।" },
@@ -193,8 +212,6 @@ const translations = {
   "chat.quick2": { en: "I need to find a doctor", hi: "मुझे डॉक्टर खोजने की जरूरत है" },
   "chat.quick3": { en: "I'm worried about something", hi: "मैं किसी बात को लेकर चिंतित हूँ" },
   "chat.quick4": { en: "I just want to talk", hi: "मैं बस बात करना चाहता हूँ" },
-  "chat.thinking": { en: "Thinking...", hi: "सोच रहा है..." },
-  "chat.placeholder": { en: "Type your message...", hi: "अपना संदेश टाइप करें..." },
 
   // Sign In Page
   "signIn.title": { en: "You don't need an account.", hi: "आपको खाते की आवश्यकता नहीं है।" },
