@@ -107,7 +107,7 @@ const translations = {
   // Footer / misc
   // Footer
   "footer.description": { en: "A behavioral companion that understands human hesitation and transforms it into confident, timely health action.", hi: "एक ऐसा साथी जो इंसानी झिझक को समझता है और उसे सही समय पर आत्मविश्वास से भरे स्वास्थ्य कदमों में बदल देता है।" },
-  "footer.builtFor": { en: "Built for DesignVerse 2026", hi: "DesignVerse 2026 के लिए निर्मित" },
+  "footer.builtFor": { en: "Built with ❤️", hi: "❤️ के साथ निर्मित" },
   "footer.product": { en: "Product", hi: "उत्पाद" },
   "footer.symptomChecker": { en: "Symptom Checker", hi: "लक्षण जाँचकर्ता" },
   "footer.aiCompanion": { en: "AI Companion", hi: "AI साथी" },
@@ -140,7 +140,7 @@ const translations = {
   "terms.s3.text": { en: "If you choose to create an account, you are responsible for maintaining the confidentiality of your login credentials via your Google account. We are not liable for any unauthorized access to your health history resulting from compromised Google credentials.", hi: "यदि आप खाता बनाना चुनते हैं, तो आप अपने Google खाते के माध्यम से अपने लॉगिन क्रेडेंशियल की गोपनीयता बनाए रखने के लिए जिम्मेदार हैं। हम Google क्रेडेंशियल से समझौता होने के परिणामस्वरूप आपके स्वास्थ्य इतिहास तक किसी भी अनधिकृत पहुंच के लिए उत्तरदायी नहीं हैं।" },
 
   // Landing Page - Hero
-  "hero.tagline": { en: "DesignVerse 2026 — Real Ideas. Real Impact.", hi: "DesignVerse 2026 — असली विचार। असली प्रभाव।" },
+  "hero.tagline": { en: "Real Ideas. Real Impact.", hi: "असली विचार। असली प्रभाव।" },
   "hero.headline": { en: "Fear is the real disease. We are the cure.", hi: "डर असली बीमारी है। हम इलाज हैं।" },
   "hero.subtitle": { en: "Thousands of people avoid doctors every day — not because care doesn't exist, but because taking the first step feels impossible. MannSaathi meets you where you are.", hi: "हर दिन हज़ारों लोग डॉक्टर से बचते हैं — इसलिए नहीं कि इलाज मौजूद नहीं है, बल्कि इसलिए कि पहला कदम उठाना असंभव लगता है। मन-साथी वहीं मिलता है जहां आप हैं।" },
   "hero.checkBtn": { en: "Check Your Symptoms — Anonymous", hi: "अपने लक्षणों की जाँच करें — गुमनाम" },

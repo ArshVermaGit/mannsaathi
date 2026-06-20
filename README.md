@@ -72,5 +72,5 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 
 ---
 <div align="center">
-  <sub>Built with ❤️ for DesignVerse Hackathon</sub>
+  <sub>Built with ❤️</sub>
 </div>
