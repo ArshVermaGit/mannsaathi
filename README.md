@@ -6,62 +6,71 @@
 </div>
 
 <div align="center">
+  <a href="https://mannsaathi-mukk.onrender.com"><strong>Live Website</strong></a> ·
   <a href="https://github.com/ArshVermaGit/mannsaathi"><strong>GitHub Repository</strong></a> ·
   <a href="https://huggingface.co/ArshVerma/mannsaathi-symptom-classifier-large"><strong>AI Model (HuggingFace)</strong></a>
 </div>
 
 <br />
 
-## 🌟 Overview
-In India, millions of people hesitate to visit a doctor due to anxiety, fear of judgment, or financial constraints. **MannSaathi** is not just a symptom checker—it's a 100% anonymous, highly accessible behavioral companion. It listens to your symptoms in English, Hindi, or Hinglish, determines the urgency using a massive medical AI model, and gently guides you toward taking the right medical action without causing panic.
+## 🌟 What is MannSaathi? (Project Explanation)
+**MannSaathi** is a web-based AI healthcare companion designed to break the hesitation people feel when seeking medical help. Many individuals avoid doctors due to fear, anxiety, or cost. MannSaathi acts as a non-judgmental, anonymous friend (or "Bhai") who listens to your symptoms in English, Hindi, or Hinglish. 
 
-## ✨ Key Features
-- **Massive Multilingual AI Brain**: Powered by a custom `xlm-roberta-large` model fine-tuned on Kaggle with LoRA, capable of accurately parsing Hinglish and identifying 22+ complex medical symptom categories.
-- **100% Anonymous & Private**: No sign-ups required. No data is tracked or stored.
-- **Bhai Mode**: An empathetic, culturally resonant chat mode that speaks to users like an older brother to alleviate medical anxiety.
-- **Ultra-Accessible Design**: Built for all. Features WCAG 2.1 Level AA compliance, robust screen reader support, keyboard navigation, and custom typography scaling for Hindi readers (Noto Sans Devanagari).
-- **Smooth & Reassuring UI**: Implements subtle, hardware-accelerated Framer Motion micro-animations that respect `prefers-reduced-motion` settings to keep anxious users calm.
+It uses an advanced, custom-trained AI model to understand what you're experiencing, assesses the urgency of the symptoms, and gently guides you on the next best steps—whether it's a home remedy for something minor or an urgent visit to the doctor for something serious. **No sign-ups, no data tracking, 100% privacy.**
 
-## 🏗️ Architecture & Tech Stack
-MannSaathi is designed for global scale, running completely serverless:
-- **Frontend**: Next.js 14, React, Tailwind CSS, Zustand, Framer Motion.
-- **Backend / API**: FastAPI (Python) routing requests to the AI model.
-- **AI Inference**: Hugging Face Serverless Inference API (Zero-cost hosting for massive models).
-- **Testing**: Playwright (E2E) and Jest (Unit).
+## 🔗 Important Links
+- **Live Website:** [https://mannsaathi-mukk.onrender.com](https://mannsaathi-mukk.onrender.com)
+- **GitHub Repository:** [https://github.com/ArshVermaGit/mannsaathi](https://github.com/ArshVermaGit/mannsaathi)
+- **Deployed AI Model:** [https://huggingface.co/ArshVerma/mannsaathi-symptom-classifier-large](https://huggingface.co/ArshVerma/mannsaathi-symptom-classifier-large)
+- **Kaggle Training Code:** [https://www.kaggle.com/code/arshvermadev/massive-multilingual-medical-diagnostic-ai/edit](https://www.kaggle.com/code/arshvermadev/massive-multilingual-medical-diagnostic-ai/edit)
 
-## 🚀 Quick Start (Local Development)
+## 🧠 AI Model & Datasets
+Our custom massive multilingual AI brain (`xlm-roberta-large`) was trained to accurately parse symptoms, especially in Hinglish, and categorize them into medical domains.
+
+**Exact Datasets Used:**
+- `gretelai/symptom_to_diagnosis`
+- `medalpaca/medical_meadow_wikidoc`
+
+**Training:**
+The model was fine-tuned on **Kaggle** using LoRA. You can find the exact training notebook here: 
+[Massive Multilingual Medical Diagnostic AI](https://www.kaggle.com/code/arshvermadev/massive-multilingual-medical-diagnostic-ai/edit)
+
+## 🚀 How to Run Locally
+
+To run the complete MannSaathi stack (Frontend + AI Backend) on your local machine, follow these exact steps:
 
 ### 1. Set up the AI Backend
-Navigate to the `ai-service` directory, install requirements, and start the FastAPI server:
+Navigate to the `ai-service` directory, install requirements, and start the FastAPI server.
 ```bash
+# Clone the repository if you haven't already
+git clone https://github.com/ArshVermaGit/mannsaathi.git
+cd mannsaathi
+
+# Go to the backend folder
 cd ai-service
+
+# Install the required Python packages
 pip install -r requirements.txt
 
-# Add your Hugging Face API token in .env first!
+# Create a .env file and add your Hugging Face API token
+echo "HF_API_TOKEN=your_token_here" > .env
+
+# Start the local API server
 uvicorn app.main:app --reload --port 10000
 ```
 
 ### 2. Start the Next.js Frontend
-In a new terminal window, start the main application:
+Open a new terminal window, ensure you are in the root `mannsaathi` directory, and start the web app.
 ```bash
+# Install Node.js dependencies
 npm install
+
+# Start the frontend development server
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## ☁️ Deployment
-MannSaathi is built to be deployed seamlessly across the cloud:
-1. **AI Model**: Hosted automatically on **Hugging Face** via the Inference API.
-2. **Backend**: Deploy the `ai-service` folder as a Web Service on **Render** or **Railway**. Set your `HF_API_TOKEN` environment variable.
-3. **Frontend**: Deploy the root Next.js project on **Vercel**. Set `NEXT_PUBLIC_API_URL` to point to your live Render backend.
-
-## 🧠 Model Training (Kaggle)
-If you wish to retrain the massive AI model on new datasets:
-1. Open a new Kaggle Notebook with a T4x2 GPU.
-2. Paste the contents of `ai-service/training/kaggle_train.py`.
-3. The script will automatically download the datasets, inject LoRA adapters to prevent GPU Out-of-Memory errors, train the model, and push it directly back to Hugging Face.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the application!
 
 ---
 <div align="center">
-  <sub>Built with ❤️ for DesignVerse 2026</sub>
+  <sub>Built with ❤️ for DesignVerse Hackathon</sub>
 </div>
