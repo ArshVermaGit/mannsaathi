@@ -66,10 +66,13 @@ IMPORTANT RULES:
 - Be medically accurate but warm and reassuring in tone`;
 
   const FREE_MODELS = [
-    "nvidia/nemotron-3-nano-30b-a3b:free",
-    "google/gemma-4-31b-it:free",
-    "meta-llama/llama-3.3-70b-instruct:free",
-    "meta-llama/llama-3.2-3b-instruct:free",
+    "qwen/qwen-2-7b-instruct:free",
+    "microsoft/phi-3-mini-128k-instruct:free",
+    "huggingfaceh4/zephyr-7b-beta:free",
+    "openchat/openchat-7b:free",
+    "meta-llama/llama-3.1-8b-instruct:free",
+    "google/gemma-2-9b-it:free",
+    "mistralai/mistral-7b-instruct:free",
   ];
 
   for (const model of FREE_MODELS) {
@@ -104,6 +107,19 @@ IMPORTANT RULES:
       if (content) {
         const jsonStr = content.replace(/```json\n?|```/g, '').trim();
         const parsed = JSON.parse(jsonStr);
+        
+        // Validate the structure to ensure we didn't just get a lazy LLM response with empty arrays/strings
+        const hasPrimaryMessage = parsed.primary_message && parsed.primary_message.trim().length > 0;
+        const hasMechanics = parsed.mechanics && parsed.mechanics.trim().length > 0;
+        const hasReasons = parsed.possible_reasons && Array.isArray(parsed.possible_reasons) && parsed.possible_reasons.length > 0;
+        const hasLifestyle = parsed.lifestyle_advice && Array.isArray(parsed.lifestyle_advice) && parsed.lifestyle_advice.length > 0;
+        const hasDoctorQs = parsed.doctor_questions && Array.isArray(parsed.doctor_questions) && parsed.doctor_questions.length > 0;
+
+        if (!hasPrimaryMessage || !hasMechanics || !hasReasons || !hasLifestyle || !hasDoctorQs) {
+          console.warn(`Model ${model} returned incomplete JSON structure (missing or empty essential fields), trying next...`);
+          continue;
+        }
+        
         console.log(`✅ LLM analysis successful with model: ${model}`);
         return parsed;
       }
@@ -146,7 +162,7 @@ export async function POST(req: Request) {
         risk_label: llmResult.risk_level || trainedResult?.risk_label || "low",
         confidence: trainedResult?.confidence || 0.85,
         is_urgent: llmResult.is_urgent === true,
-        primary_message: llmResult.primary_message,
+        primary_message: llmResult.primary_message || "We've received your symptoms and processed them. While our AI is temporarily unavailable for deep analysis, we recommend consulting a healthcare provider for a thorough evaluation.",
         possible_reasons: llmResult.possible_reasons || [],
         reassurances: trainedResult?.reassurances || ["You did the brave thing by checking."],
         next_steps: trainedResult?.next_steps || [],
@@ -160,10 +176,10 @@ export async function POST(req: Request) {
         ...trainedResult,
         primary_message: trainedResult.primary_message?.includes("Mock")
           ? "We've analyzed your symptoms. Please review the details below for guidance."
-          : trainedResult.primary_message,
-        mechanics: "Based on the symptoms you described, your body may be responding to stress, infection, or an underlying condition. We recommend consulting a healthcare provider for a thorough evaluation.",
-        lifestyle_advice: ["Stay hydrated and rest well", "Practice deep breathing exercises", "Maintain a balanced diet"],
-        doctor_questions: ["What could be causing these symptoms?", "Are there any tests I should take?", "What lifestyle changes would you recommend?"],
+          : (trainedResult.primary_message || "We've analyzed your symptoms. Please review the details below for guidance."),
+        mechanics: trainedResult.mechanics || "Based on the symptoms you described, your body may be responding to stress, infection, or an underlying condition. We recommend consulting a healthcare provider for a thorough evaluation.",
+        lifestyle_advice: trainedResult.lifestyle_advice || ["Stay hydrated and rest well", "Practice deep breathing exercises", "Maintain a balanced diet"],
+        doctor_questions: trainedResult.doctor_questions || ["What could be causing these symptoms?", "Are there any tests I should take?", "What lifestyle changes would you recommend?"],
       };
     } else {
       // Both failed - pure fallback (still no mock text)
