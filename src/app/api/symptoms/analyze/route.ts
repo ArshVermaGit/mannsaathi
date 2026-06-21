@@ -66,13 +66,11 @@ IMPORTANT RULES:
 - Be medically accurate but warm and reassuring in tone`;
 
   const FREE_MODELS = [
-    "qwen/qwen-2-7b-instruct:free",
-    "microsoft/phi-3-mini-128k-instruct:free",
-    "huggingfaceh4/zephyr-7b-beta:free",
-    "openchat/openchat-7b:free",
-    "meta-llama/llama-3.1-8b-instruct:free",
-    "google/gemma-2-9b-it:free",
-    "mistralai/mistral-7b-instruct:free",
+    "openrouter/free",
+    "qwen/qwen3-next-80b-a3b-instruct:free",
+    "meta-llama/llama-3.3-70b-instruct:free",
+    "meta-llama/llama-3.2-3b-instruct:free",
+    "google/gemma-4-31b-it:free"
   ];
 
   for (const model of FREE_MODELS) {
